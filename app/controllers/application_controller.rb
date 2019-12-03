@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  respond_to :json
   include ActionController::RequestForgeryProtection
-  protect_from_forgery with: :exception
+  protect_from_forgery prepend: true
 end

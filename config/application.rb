@@ -42,6 +42,9 @@ module MarketPlaceApi
       g.helper = false
     end
 
+    config.navigational_formats = []
+    config.middleware.use ActionDispatch::Flash
+
     # config.eager_load_paths << Rails.root.join('lib')
   end
 end
