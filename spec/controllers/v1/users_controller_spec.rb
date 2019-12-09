@@ -72,4 +72,15 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
     end
   end
+
+  describe '#delete delete user' do
+    context 'when user is deleted' do
+      before(:each) do
+        @user = FactoryBot.create :user
+        delete :destroy, params: { use_route: 'api/v1/user/id', id: @user.id }
+      end
+
+      it { expect(response).to have_http_status(204)}
+    end
+  end
 end
