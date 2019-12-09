@@ -34,7 +34,7 @@ module MarketPlaceApi
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       g.test_framework :rspec, fixture: true
-      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
       g.view_specs false
       g.helper_specs false
       g.stylesheets = false
@@ -42,6 +42,9 @@ module MarketPlaceApi
       g.helper = false
     end
 
-    config.eager_load_paths << Rails.root.join('lib')
+    config.navigational_formats = []
+    config.middleware.use ActionDispatch::Flash
+
+    # config.eager_load_paths << Rails.root.join('lib')
   end
 end
