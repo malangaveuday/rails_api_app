@@ -46,4 +46,30 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       it { expect(response).to have_http_status(422)}
     end
   end
+
+  describe '#put update user' do
+    context 'when user is updated' do
+      before(:each) do
+        @user = FactoryBot.create :user
+        put :update, params: { use_route: 'api/v1/users/:id', id: @user.id, user: { email: 'new_email@test.com'} }
+      end
+
+      it 'render the response just updated user' do
+        user_response = JSON.parse(response.body, symbolize_names: true)
+        expect(user_response[:email]).to eql 'new_email@test.com'
+      end
+    end
+
+    context 'when user is not created' do
+      before(:each) do
+        @user = FactoryBot.create :user
+        put :update, params: { use_route: 'api/v1/users/:id', id: @user.id, user: { email: 'invalidemail.com' } }
+      end
+
+      it 'when user is not updated' do
+        user_response = JSON.parse(response.body, symbolize_names: true)
+        expect(user_response[:errors][:email]).to include 'is invalid'
+      end
+    end
+  end
 end
