@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:create]
-  before_action :authenticate_with_token!, only: [:update]
+  before_action :authenticate_with_token!, only: [:update, :destroy]
 
   def show
     render :json => User.find(params[:id])
