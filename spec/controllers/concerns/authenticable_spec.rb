@@ -21,7 +21,7 @@ describe Authenticable do
 
   describe "#authenticate_with_token" do
     before do
-      @user = FactoryGirl.create :user
+      @user = FactoryBot.create :user
       authentication.stub(:current_user).and_return(nil)
       response.stub(:response_code).and_return(401)
       response.stub(:body).and_return({"errors" => "Not authenticated"}.to_json)

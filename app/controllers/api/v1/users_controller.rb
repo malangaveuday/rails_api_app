@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:create]
-
+  before_action :authenticate_with_token!, only: [:update]
 
   def show
     render :json => User.find(params[:id])
@@ -16,7 +16,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:id])
+    user = current_user
     if user.update(user_params)
       render json: user, status: 200, location: [:api, user]
     else

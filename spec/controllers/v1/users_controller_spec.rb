@@ -51,6 +51,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     context 'when user is updated' do
       before(:each) do
         @user = FactoryBot.create :user
+        api_authorization_header @user[:auth_token]
         put :update, params: { use_route: 'api/v1/users/:id', id: @user.id, user: { email: 'new_email@test.com'} }
       end
 
@@ -63,6 +64,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     context 'when user is not created' do
       before(:each) do
         @user = FactoryBot.create :user
+        api_authorization_header @user[:auth_token]
         put :update, params: { use_route: 'api/v1/users/:id', id: @user.id, user: { email: 'invalidemail.com' } }
       end
 
