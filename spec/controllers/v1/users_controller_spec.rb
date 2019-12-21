@@ -10,7 +10,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
     it 'returns the information about a reporter on hash' do
-      user_response = JSON.parse(response.body, symbolize_names: true)
+      user_response = json_response
       expect(user_response[:email]).to eql @user.email
     end
 
@@ -25,7 +25,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it 'render the response of user just created' do
-        user_response = JSON.parse(response.body, symbolize_names: true)
+        user_response = json_response
         expect(user_response[:email]).to eql @user_attributes[:email]
       end
 
@@ -39,7 +39,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it 'render the error message' do
-        user_response = JSON.parse(response.body, symbolize_names: true)
+        user_response = json_response
         expect(user_response[:errors][:email]).to include "can't be blank"
       end
 
@@ -55,7 +55,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it 'render the response just updated user' do
-        user_response = JSON.parse(response.body, symbolize_names: true)
+        user_response = json_response
         expect(user_response[:email]).to eql 'new_email@test.com'
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it 'when user is not updated' do
-        user_response = JSON.parse(response.body, symbolize_names: true)
+        user_response = json_response
         expect(user_response[:errors][:email]).to include 'is invalid'
       end
     end
