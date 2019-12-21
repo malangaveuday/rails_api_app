@@ -31,4 +31,13 @@ RSpec.describe Api::V1::SessionController, type: :controller do
       it { expect(response).to have_http_status(422) }
     end
   end
+
+  describe '#destroy user session' do
+    before(:each) do
+      @user = FactoryBot.create(:user)
+      sign_in @user, store: false
+      delete :destroy, id: @user.auth_token
+    end
+    it { expect(response).to have_http_status(204) }
+  end
 end
