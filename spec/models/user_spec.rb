@@ -18,5 +18,21 @@ RSpec.describe User, type: :model do
     it { should allow_value('example@domain.com').for(:email) }
   end
 
+  it { should respond_to(:auth_token) }
+  it { should validate_uniqueness_of(:auth_token) }
+
+  describe '#generate auth token' do
+    it 'generate unique auth token' do
+      Devise.stub(:friendly_token).and_return('auniquetoken123')
+      @user.generate_authentication_token!
+      expect(@user.auth_token).to eql 'auniquetoken123'
+    end
+
+    it 'generate new token if already auth_token present' do
+      existing_user = FactoryBot.create(:user, auth_token: 'auniquetoken123')
+      @user.generate_authentication_token!
+      expect(@user.auth_token).not_to eql 'auniquetoken123'
+    end
+  end
 end
 
