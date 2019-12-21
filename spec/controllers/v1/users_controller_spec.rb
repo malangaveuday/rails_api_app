@@ -65,7 +65,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       before(:each) do
         @user = FactoryBot.create :user
         api_authorization_header @user[:auth_token]
-        put :update, params: { use_route: 'api/v1/users/:id', id: @user.id, user: { email: 'invalidemail.com' } }
+        put :update, params: { use_route: 'api/v1/users/:id', user: { email: 'invalidemail.com' } }
       end
 
       it 'when user is not updated' do
@@ -79,7 +79,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     context 'when user is deleted' do
       before(:each) do
         @user = FactoryBot.create :user
-        delete :destroy, params: { use_route: 'api/v1/user/id', id: @user.id }
+        api_authorization_header @user[:auth_token]
+        delete :destroy, params: { use_route: 'api/v1/user/id' }
       end
 
       it { expect(response).to have_http_status(204)}
