@@ -64,4 +64,5 @@ RSpec.configure do |config|
 
   # heper include
   config.include Request::JsonHelpers, :type => :controller
+  config.include Devise::TestHelpers, :type => :controller
 end
